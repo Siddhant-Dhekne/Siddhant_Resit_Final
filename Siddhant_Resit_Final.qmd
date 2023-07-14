@@ -1,0 +1,89 @@
+---
+title: "Quatro Report Siddhant"
+author: "Siddhant M Dhekne"
+output: html_document
+---
+
+## Quarto
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(readr)
+library(dplyr)
+library(maps)
+library(ggmap)
+library(rnaturalearth)
+library(sf)
+```
+## Question : Is the life expectancy and population of a country major factors in determining New Covid Cases and totalCovid deaths ?
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+GDPData <- read_csv("country_data.Clean.csv")
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+IndicatorData <- read_csv("country_metadata.Clean.csv")
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+Livebirths <- read_csv("country_data.Clean_2.csv")
+```
+# Life expectancy of a country.
+The world map shows the Life Expectancy across different countries. Countries with higher expectancy are shown in darker shades of orange.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+world_map <- map_data("world")
+IndicatorData_map <- IndicatorData %>%
+  left_join(world_map, by = c("location" = "region"))
+ggplot() +
+  geom_polygon(data = world_map, aes(x = long, y = lat, group = group), fill = "lightgray", color = "white") +
+  theme_void() +
+  geom_polygon(data = IndicatorData_map, aes(x = long, y = lat, group = group, fill = `life_expectancy`), na.rm = TRUE) +
+  scale_fill_gradient(low = "red", high = "darkred", name = "life_expectancy") +
+  theme_minimal() +
+  labs(title = "Life Expectancy across different countries")
+
+```
+
+# Rate of total deaths 
+
+The scatterplot illustrates the relationship between the total deaths and the population of the 8 countries. The linear regression line shows the general trend.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+ggplot(Livebirths, aes(x = total_deaths, y = population, color = total_deaths)) +
+  geom_point(alpha = 0.6, size = 3) +
+  geom_smooth(method = "lm", se = FALSE, linetype = "dashed", color = "black") +
+  scale_color_gradient2(low = "green", mid = "blue", high = "red", midpoint = median(Livebirths$total_deaths, na.rm = TRUE), name = "Total deaths in 2022") +
+  labs(title = "Scatter Plot",
+       x = "Total Deaths",
+       y = "Population") +
+  theme_minimal()
+```
+# New cases 2022
+
+The bar chart presents the new cases for each country
+```{r gdp_bar_chart, fig.height=20, fig.width=12, echo=FALSE}
+
+ggplot(Livebirths, aes(x = `new_cases`, y = reorder(location, `new_cases`))) +
+  geom_bar(stat = "identity") +
+  labs(title = "New Cases - 2022 (8 countries)",
+       x = "New Cases",
+       y = "Country") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.x = element_blank()) +
+  coord_flip()
+```
+
+# Conclusion
+
+The graphical assignment demonstrates the complex interplay between various parameters - life expectancy, population, total deaths, and the number of new cases. The investigation suggests that simplistic correlations might not effectively reveal the intricate dynamics of a global health scenario, as shown by the example of Ireland. Ireland, despite having a high life expectancy, paradoxically also has a high number of new cases. This challenges the often-assumed connection that countries with higher life expectancies are better equipped to manage and mitigate the emergence of new cases.
+
+Our study highlights the importance of considering a multitude of factors that determine life expectancy when studying a public health issue. Factors like healthcare systems, policies, cultural attitudes towards health, and even geography, to name a few, play a significant role in the number of new cases and cannot be overlooked. Life expectancy, although a useful metric, is not an exclusive determinant of a country's ability to control disease spread.
+
+The scatter plot showing the relationship between population and total deaths presents another compelling layer to this complex picture. The relationship was far from straightforward, suggesting that population size does not necessarily translate to more deaths. This points towards the role of other intervening variables like public health infrastructure, medical advancements, and the level of government response to public health crises. For instance, a country with a smaller population but inadequate health infrastructure might see more deaths than a larger country with robust health systems and policies in place.
+
+This data serves as a reminder that each country's unique context contributes significantly to its health outcome. When dealing with global health issues, one-size-fits-all conclusions are both misleading and potentially harmful. Our approach to understanding and addressing such issues needs to be as nuanced and multi-faceted as the problems themselves.
+
+Therefore, the analysis underscores the imperative of adopting a more holistic, interdisciplinary perspective in understanding and addressing public health issues. It also calls for more granular, detailed data and advanced methods of analysis that can capture the true complexity of the situations.
+
+The graphs in this assignment, thus, do more than just represent numbers - they reflect real-world complexities and serve as a potent reminder of the need for nuanced perspectives in public health discourse. Life expectancy, population, new cases, and total deaths are all intertwined in a complex web of cause and effect, necessitating more profound and comprehensive analysis in public health strategies.

@@ -1,0 +1,9 @@
+location,stringency_index,population_density,median_age,aged_65_older,aged_70_older,gdp_per_capita,extreme_poverty,cardiovasc_death_rate,diabetes_prevalence,female_smokers,male_smokers,handwashing_facilities,hospital_beds_per_thousand,life_expectancy,human_development_index
+Bosnia and Herzegovina,0,68.496,42.5,16.569,10.711,11713.895,0.2,329.635,10.08,30.2,47.7,97.164,3.5,77.4,0.78
+Ireland,0,69.874,38.7,13.928,8.678,67335.293,0.2,126.459,3.28,23,25.7,,2.96,82.3,0.955
+Latvia,0,31.212,43.9,19.754,14.136,25063.846,0.7,350.06,4.91,25.6,51,,5.57,75.29,0.866
+Monaco,0,19347.5,,,,,,,5.46,,,,13.8,86.75,
+Northern Mariana Islands,,119.878,,,,,,194.994,,,,,,76.74,
+Saint Pierre and Miquelon,,,,,,,,,,,,,,81.07,
+Togo,0,143.366,19.4,2.839,1.525,1429.813,49.2,280.033,6.15,0.9,14.2,10.475,0.7,61.04,0.515
+Tunisia,0,74.228,32.7,8.001,5.075,10849.297,2,318.991,8.52,1.1,65.8,78.687,2.3,76.7,0.74
